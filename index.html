@@ -44,7 +44,8 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
-        min-width: 600px;
+        min-width: 400px;
+        
       }
       h1 {
         top: 0.5rem;
@@ -65,37 +66,48 @@
       }
       #cart {
         flex: 1 1 20%;
+        justify-content: center;
+        align-items: center;
+        
       }
       .card {
         border: 1px solid rgb(3, 50, 119);
         padding: 1rem;
+        
         border-radius: 10px;
         box-sizing: content-box;
         max-width: 200px;
         position: relative;
       }
       .card img {
-        width: 30%;
+        width: 35%;
         height: auto;
-        filter: contrast(0.3);
+        display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+        filter: contrast(0.8);
         background-blend-mode: multiply;
         background-size: cover;
       }
       .card .price {
         position: absolute;
-        top: 1.5rem;
-        right: 2rem;
+        top: 0.5rem;
+        right: 0.5rem;
         transform: rotate(0deg);
         text-shadow: 2px 2px 2px #333, 1px 1px 2px #eee;
         color: #bada55;
         font-weight: 700;
-        font-size: 1.5rem;
+        font-size: 1rem;
       }
       .card h2 {
-        font-size: 1.2rem;
+        font-size: 0.9rem;
+        text-align: center;
+        vertical-align: middle;
       }
       .card p {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
+        
       }
       .card .btn {
         border: 2px solid rgb(62, 121, 231);
@@ -117,7 +129,9 @@
         position: relative;
         margin-left: 1rem;
         margin-bottom: 0.3rem;
-        margin-top: 0.5rem;
+        margin-top: 1rem;
+        
+        
       }
       .cart-item .price {
         position: absolute;
@@ -131,7 +145,8 @@
         transform: rotate(0deg);
       }
       .cart-item .title {
-        font-size: 1rem;
+        text-align: center;
+        font-size: 0.7rem;
         color: #999;
         line-height: 1.5rem;
         height: 1.5rem;
@@ -155,6 +170,7 @@
         position: relative;
 
         margin-bottom: 0.3rem;
+        
         top: 0.4rem;
         bottom: 1rem;
         right: 0.2rem;
@@ -182,8 +198,7 @@
         background-color: #eee;
       }
       input {
-        width: 1.1rem;
-        text-align: center;
+        width: 1rem;
       }
       .cart-item span:nth-child(1),
       .cart-item span:nth-child(3),
@@ -218,9 +233,9 @@
           } else {
             //dummy test data
             CART.contents = [
-              { id: 1, title: 'Apple', qty: 5, itemPrice: 0.85 },
-              { id: 2, title: 'Banana', qty: 3, itemPrice: 0.35 },
-              { id: 3, title: 'Cherry', qty: 8, itemPrice: 0.05 },
+              { id: 1, title: 'Iron', qty: 5, itemPrice: 23.45 },
+              { id: 2, title: 'Washing Machine', qty: 3, itemPrice: 411.34 },
+              { id: 3, title: 'Watch', qty: 8, itemPrice: 143.21 },
             ];
             CART.sync();
           }
@@ -263,23 +278,16 @@
             }
           }
         },
-        // increase(id, qty = 1) {
-        //   //increase the quantity of an item in the cart
-        //   CART.contents = CART.contents.map((item) => {
-        //     if (item.id === id) item.qty = item.qty + qty;
-        //     return item;
-        //   });
-        //   //update localStorage
-        //   CART.sync();
-        // },
+      
         increase(id, qty = 1) {
           //increase the quantity of an item in the cart
           CART.contents = CART.contents.map((item) => {
             if (item.id === id && qty === 1) {
               item.qty = item.qty + qty;
-            } else if (item.id === id && qty !== 1) {
-              item.qty = qty;
-            }
+            } else 
+                  if (item.id === id && qty > 1) {
+                  item.qty = qty;
+                }
 
             return item;
           });
@@ -422,6 +430,7 @@
       function incrementCart(ev) {
         ev.preventDefault();
         let id = parseInt(ev.target.getAttribute('data-id'));
+        console.log('id inc:', id);
         CART.increase(id, 1);
         let controls = ev.target.parentElement;
         let qty = controls.querySelector('input');
@@ -431,12 +440,14 @@
         } else {
           document.getElementById('cart').removeChild(controls.parentElement);
         }
+        console.log('Plus clicked');
         showCart();
       }
 
       function decrementCart(ev) {
         ev.preventDefault();
         let id = parseInt(ev.target.getAttribute('data-id'));
+        console.log('id dec:', id);
         CART.reduce(id, 1);
         let controls = ev.target.parentElement;
         let qty = controls.querySelector('input');
@@ -466,6 +477,7 @@
 
       function quantityChanged(ev) {
         let qty = parseInt(ev.target.value);
+        console.log('qty', qty);
         if (isNaN(qty) || qty <= 0) {
           qty = 1;
         }
@@ -477,36 +489,12 @@
 
         showCart();
 
-        // let input = event.target;
-        // if (isNaN(input.value) || input.value <= 0) {
-        //   input.value = 1;
-        // }
-        // showCart();
       }
-
-      // function updateCartTotal() {
-      //   var cartItemContainer = document.getElementsByClassName('cart')[0];
-      //   var cartRows = cartItemContainer.getElementsByClassName('cart-row');
-      //   var total = 0;
-      //   for (var i = 0; i < cartRows.length; i++) {
-      //     var cartRow = cartRows[i];
-      //     var priceElement = cartRow.getElementsByClassName('cart-price')[0];
-      //     var quantityElement = cartRow.getElementsByClassName(
-      //       'cart-quantity-input'
-      //     )[0];
-      //     var price = parseFloat(priceElement.innerText.replace('$', ''));
-      //     var quantity = quantityElement.value;
-      //     total = total + price * quantity;
-      //   }
-      //   total = Math.round(total * 100) / 100;
-      //   document.getElementsByClassName('cart-total-price')[0].innerText =
-      //     '$' + total;
-      // }
 
       function getProducts(success, failure) {
         //request the list of products from the "server"
-        const URL =
-          'https://amo2019.github.io/media-sample-files/products.json?';
+        const URL = 'https://amo2019.github.io/media-sample-files/products.json?';
+          //'./products.json';
         fetch(URL, {
           method: 'GET',
           mode: 'cors',
@@ -522,6 +510,7 @@
         PRODUCTS = products;
         //take data.products and display inside <section id="products">
         let imgPath = 'https://amo2019.github.io/media-sample-files/';
+        //'./media-sample-files/';
         let productSection = document.getElementById('products');
         productSection.innerHTML = '';
         products.forEach((product) => {
