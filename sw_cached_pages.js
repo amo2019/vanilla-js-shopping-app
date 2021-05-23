@@ -3,7 +3,8 @@ const cacheName = 'v2';
 const cacheAssets = [
   'index.html',
   '/css/style.css',
-  '/js/main.js'
+  '/js/main.js',
+  'https://amo2019.github.io/media-sample-files/*.webp',
 ];
 
 //Install Event
