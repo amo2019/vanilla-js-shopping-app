@@ -1,16 +1,12 @@
 if ('serviceWorker' in navigator) {
     // Register a service worker hosted at the root of the site
-    navigator.serviceWorker.register('../sw_cached_site.js', { scope: '/' }).then(
-      (registration) => {
-        let SW =
-          registration.installing ||
-          registration.waiting ||
-          registration.active;
-      },
-      (error) => {
-        console.log('Service worker registration failed:', error);
-      }
-    );
+    navigator.serviceWorker.register('../sw_cached_site.js', {
+      scope: '/'
+  }).then(function(reg) {
+    console.log("Service worker registered")
+   }).catch(function(err) {
+    console.log(err);
+    });
   } else {
     console.log('Service workers are not supported.');
   }
