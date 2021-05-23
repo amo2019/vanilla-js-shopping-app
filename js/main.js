@@ -1,6 +1,6 @@
 if ('serviceWorker' in navigator) {
     // Register a service worker hosted at the root of the site
-    navigator.serviceWorker.register('../sw_cached_site.js').then(
+    navigator.serviceWorker.register('../sw_cached_site.js', { scope: '/' }).then(
       (registration) => {
         let SW =
           registration.installing ||
