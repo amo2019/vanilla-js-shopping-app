@@ -4,7 +4,7 @@ const cacheAssets = [
   'index.html',
   '/css/style.css',
   '/js/main.js',
-  'https://amo2019.github.io/media-sample-files/*.webp',
+  'https://amo2019.github.io/media-sample-files/*',
 ];
 
 //Install Event
