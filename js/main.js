@@ -207,14 +207,25 @@ if ('serviceWorker' in navigator) {
        
         let totalPrice = document.createElement('span');
         totalPrice.className = 'totalPrice';
-        let cost = new Intl.NumberFormat('en-CA', {
+        let cost = new Intl.NumberFormat('en-US', {
           style: 'currency',
-          currency: 'CAD',
+          currency: 'USD',
         }).format(total);
         totalPrice.textContent = `Total: ${cost}`;
         //totalPrice.innerText = '£' + cost;
-        cart.appendChild(totalPrice);
-
+        //cart.appendChild(totalPrice);
+        //document.getElementById('total').removeChild(totalPrice);
+        let main = document.getElementById('total');
+        let item = document.getElementById("total").childNodes[0];
+        if(main.hasChildNodes(totalPrice)){
+  
+        // Replace the first child node with the newly created text node
+          item.replaceChild(totalPrice, item.childNodes[0]);
+          
+        } else {
+          main.appendChild(totalPrice);
+        }
+        
         //cartSection.appendChild(cartitem);
       }
 
