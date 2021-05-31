@@ -164,9 +164,9 @@ if ('serviceWorker' in navigator) {
           let controls = document.createElement('div');
           controls.className = 'controls';
           cartitem.appendChild(controls);
-
+          const inc = '\u{2214}';
           let plus = document.createElement('span');
-          plus.textContent = '+';
+          plus.textContent = inc;
           plus.setAttribute('data-id', item.id);
           controls.appendChild(plus);
           plus.addEventListener('click', incrementCart);
@@ -176,18 +176,18 @@ if ('serviceWorker' in navigator) {
           qty.setAttribute('data-id', item.id);
           controls.appendChild(qty);
           qty.addEventListener('change', quantityChanged);
-
+          const dec = '\u{2212}';
           let minus = document.createElement('span');
-          minus.textContent = '-';
+          minus.textContent = dec;
           minus.setAttribute('data-id', item.id);
           controls.appendChild(minus);
           minus.addEventListener('click', decrementCart);
 
           let price = document.createElement('div');
           price.className = 'price';
-          let cost = new Intl.NumberFormat('en-CA', {
+          let cost = new Intl.NumberFormat('en-US', {
             style: 'currency',
-            currency: 'CAD',
+            currency: 'USD',
           }).format(item.qty * item.itemPrice);
           price.textContent = cost;
           cartitem.appendChild(price);
@@ -248,7 +248,7 @@ if ('serviceWorker' in navigator) {
       function decrementCart(ev) {
         ev.preventDefault();
         let id = parseInt(ev.target.getAttribute('data-id'));
-        // console.log('id dec:', id);
+        console.log('id dec:', id);
         CART.reduce(id, 1);
         let controls = ev.target.parentElement;
         let qty = controls.querySelector('input');

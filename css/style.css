@@ -209,6 +209,7 @@
         color: rgb(14, 39, 83);
         font-size: 1.2rem;
         line-height: 1.5rem;
-        padding: 0 0.6rem;
+        padding: 0 1rem;
         display: block;
+        z-index: 5;
       }
